@@ -1,0 +1,24 @@
+spring:
+  main:
+    allow-circular-references: true
+
+  shell:
+    interactive:
+      enabled: true
+
+  data:
+    mongodb:
+      database: books
+      port:
+        27017
+      host:
+        localhost
+
+mongock:
+  runner-type: InitializingBean
+  change-logs-scan-package:
+    - com.maslov.mongohomework.config.dbmigrations
+  mongo-db.write-concern.journal:
+    true
+  mongo-db.read-concern:
+    available
