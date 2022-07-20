@@ -1,6 +1,11 @@
 package com.maslov.mongohomework.domain;
 
+import org.springframework.data.annotation.Id;
+
 public class Genre {
+
+    @Id
+    private String id;
 
     private String name;
 

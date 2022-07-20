@@ -51,7 +51,7 @@ public class BookServiceHelper {
         String name = helper.getFromUser();
         if (name.isEmpty()) {
             try {
-                return bookRepo.findById(idOfBook).orElseThrow().getName();
+                return bookRepo.findById(Integer.valueOf(idOfBook)).orElseThrow().getName();
             } catch (Exception e) {
                 System.out.println("Has not this book, need enter new name");
                 throw new MongoMaslovException("Has not this book, need enter new name");
@@ -116,13 +116,13 @@ public class BookServiceHelper {
         String comment = helper.getFromUser();
         if (comment.isEmpty()) {
             try {
-                return bookRepo.findById(ibOfBook).orElseThrow().getListOfComment();
+                return bookRepo.findById(Integer.valueOf(ibOfBook)).orElseThrow().getListOfComment();
             } catch (NoSuchElementException | NullPointerException e) {
                 return new ArrayList<>();
             }
         } else {
             val comm = new Comment(comment);
-            List<Comment> comments = bookRepo.findById(ibOfBook).orElseThrow().getListOfComment();
+            List<Comment> comments = bookRepo.findById(Integer.valueOf(ibOfBook)).orElseThrow().getListOfComment();
             comments.add(comm);
             return comments;
         }

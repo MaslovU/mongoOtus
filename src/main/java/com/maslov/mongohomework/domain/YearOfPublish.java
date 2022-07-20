@@ -1,6 +1,12 @@
 package com.maslov.mongohomework.domain;
 
+import org.springframework.data.annotation.Id;
+
 public class YearOfPublish {
+
+    @Id
+    private String id;
+
     private String title;
 
     public YearOfPublish() {

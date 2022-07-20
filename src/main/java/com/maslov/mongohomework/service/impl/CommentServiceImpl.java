@@ -29,7 +29,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<Comment> getAllCommentsForBook() {
-        String idOfBook = getIdForBook();
+        int idOfBook = Integer.parseInt(getIdForBook());
         return bookRepo.findById(idOfBook).orElseThrow().getListOfComment();
     }
 
@@ -41,7 +41,7 @@ public class CommentServiceImpl implements CommentService {
         System.out.println("Enter your comment");
         Comment comm = new Comment(helper.getFromUser());
         Comment addedComment = commentRepo.save(comm);
-        Book bookFromDB = bookRepo.findById(idForBook).orElseThrow();
+        Book bookFromDB = bookRepo.findById(Integer.valueOf(idForBook)).orElseThrow();
         List<Comment> commentList = bookFromDB.getListOfComment();
         commentList.add(addedComment);
         Book book = new Book(bookFromDB.getName(),
@@ -60,22 +60,22 @@ public class CommentServiceImpl implements CommentService {
         String idForBook = getIdForBook();
         String idComment = getCommentId(idForBook);
         helper.getEmptyString();
-        Comment commentFromDB = commentRepo.findById(idComment).orElseThrow();
+        Comment commentFromDB = commentRepo.findById(Integer.valueOf(idComment)).orElseThrow();
         System.out.println("Enter correct comment");
         String newComment = helper.getFromUser();
         Comment comment = new Comment(newComment);
         BeanUtils.copyProperties(comment, commentFromDB, "id");
         commentRepo.save(commentFromDB);
-        return bookRepo.findById(idForBook).orElseThrow().getListOfComment();
+        return bookRepo.findById(Integer.valueOf(idForBook)).orElseThrow().getListOfComment();
     }
 
     @Override
     public List<Comment> deleteComment() {
         String idForBook = getIdForBook();
         String idForComment = getCommentId(idForBook);
-        Comment comment = commentRepo.findById(idForComment).orElseThrow();
+        Comment comment = commentRepo.findById(Integer.valueOf(idForComment)).orElseThrow();
         commentRepo.deleteById(comment.getId());
-        return bookRepo.findById(idForBook).orElseThrow().getListOfComment();
+        return bookRepo.findById(Integer.valueOf(idForBook)).orElseThrow().getListOfComment();
     }
 
     private String getIdForBook() {
@@ -91,7 +91,7 @@ public class CommentServiceImpl implements CommentService {
 
     private String getCommentId(String idForBook) {
 
-        for (Comment c : bookRepo.findById(idForBook).orElseThrow().getListOfComment()) {
+        for (Comment c : bookRepo.findById(Integer.valueOf(idForBook)).orElseThrow().getListOfComment()) {
             System.out.println(c);
         }
         System.out.println("Choose and enter id of comment");

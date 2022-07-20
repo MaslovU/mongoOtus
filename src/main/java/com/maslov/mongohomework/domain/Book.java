@@ -8,7 +8,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.List;
 
 @Document(collection = "books")
-@Data
 public class Book {
     @Id
     private String id;
@@ -19,7 +18,7 @@ public class Book {
 
     private YearOfPublish year;
 
-    @DBRef(lazy = true)
+    @DBRef
     private List<Author> authors;
 
     @DBRef

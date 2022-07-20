@@ -32,8 +32,8 @@ public class BookServiceImpl implements BookService {
     @Override
     public void getBook() {
         System.out.println(ENTER_ID);
-        String id = helper.getFromUser();
-        if (!id.equals("0")) {
+        int id = helper.getIntFromUser();
+        if (id == 0) {
             Book book = bookRepo.findById(id).orElseThrow(() -> new MongoMaslovException("Book with this id is not exist"));
             System.out.println(book);
         } else {
@@ -61,11 +61,11 @@ public class BookServiceImpl implements BookService {
     public void updateBook() {
         log.debug("Start updating book. if you don't want to change the value, click Enter");
         System.out.println(ENTER_ID);
-        String id = helper.getFromUser();
+        int id = helper.getIntFromUser();
         helper.getEmptyString();
-        if (!id.equals("0")) {
+        if (id == 0) {
             Book bookFromDB = bookRepo.findById(id).orElseThrow();
-            BeanUtils.copyProperties(bookServiceHelper.getBookFromUser(id), bookFromDB, "id");
+            BeanUtils.copyProperties(bookServiceHelper.getBookFromUser(String.valueOf(id)), bookFromDB, "id");
             bookRepo.save(bookFromDB);
         } else {
             System.out.println(GET_ALL);
@@ -75,8 +75,8 @@ public class BookServiceImpl implements BookService {
     @Override
     public void delBook() {
         System.out.println(ENTER_ID);
-        String id = helper.getFromUser();
-        if (id.equals("0")) {
+        int id = helper.getIntFromUser();
+        if (id != 0) {
             bookRepo.deleteById(id);
             log.info("Book deleted successfully");
         } else {

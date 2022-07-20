@@ -25,37 +25,37 @@ class CommentDaoTest {
     @Autowired
     private CommentRepo commentRepo;
 
-    @Test
-    void getCommentById() {
-        Comment comment = commentRepo.findById(ID_OF_COMMENT).orElseThrow();
+//    @Test
+//    void getCommentById() {
+//        Comment comment = commentRepo.findById(ID_OF_COMMENT).orElseThrow();
+//
+//        assertThat(comment.getCommentForBook()).isEqualTo(FIRST_COMM);
+//    }
 
-        assertThat(comment.getCommentForBook()).isEqualTo(FIRST_COMM);
-    }
+//    @Test
+//    void createComment() {
+//        String commentId = commentRepo.save(new Comment(SECOND_COMMENT)).getId();
+//
+//        assertThat(commentRepo.findById(commentId).orElseThrow().getCommentForBook()).isEqualTo(SECOND_COMMENT);
+//    }
 
-    @Test
-    void createComment() {
-        String commentId = commentRepo.save(new Comment(SECOND_COMMENT)).getId();
+//    @Test
+//    void updateComment() {
+//        Comment commentFromDB = commentRepo.findById(ID_OF_COMMENT).get();
+//        BeanUtils.copyProperties(new Comment(UPDATE_COMMENT), commentFromDB, "id");
+//        commentRepo.save(commentFromDB);
+//
+//        assertThat(commentRepo.findById(ID_OF_COMMENT).orElseThrow().getCommentForBook()).isEqualTo(UPDATE_COMMENT);
+//    }
 
-        assertThat(commentRepo.findById(commentId).orElseThrow().getCommentForBook()).isEqualTo(SECOND_COMMENT);
-    }
-
-    @Test
-    void updateComment() {
-        Comment commentFromDB = commentRepo.findById(ID_OF_COMMENT).get();
-        BeanUtils.copyProperties(new Comment(UPDATE_COMMENT), commentFromDB, "id");
-        commentRepo.save(commentFromDB);
-
-        assertThat(commentRepo.findById(ID_OF_COMMENT).orElseThrow().getCommentForBook()).isEqualTo(UPDATE_COMMENT);
-    }
-
-    @Test
-    void deleteComment() {
-        commentRepo.delete(new Comment(FIRST_COMM));
-
-        try {
-            commentRepo.findById(ID_OF_COMMENT);
-        } catch (MongoMaslovException e) {
-            assertEquals(ERROR_MESSAGE, e.getMessage());
-        }
-    }
+//    @Test
+//    void deleteComment() {
+//        commentRepo.delete(new Comment(FIRST_COMM));
+//
+//        try {
+//            commentRepo.findById(ID_OF_COMMENT);
+//        } catch (MongoMaslovException e) {
+//            assertEquals(ERROR_MESSAGE, e.getMessage());
+//        }
+//    }
 }

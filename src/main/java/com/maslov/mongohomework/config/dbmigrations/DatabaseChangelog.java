@@ -8,7 +8,9 @@ import com.maslov.mongohomework.domain.Comment;
 import com.maslov.mongohomework.domain.Genre;
 import com.maslov.mongohomework.domain.YearOfPublish;
 import com.maslov.mongohomework.repository.BookRepo;
+import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import org.bson.Document;
 
 import java.util.ArrayList;
 
@@ -29,15 +31,24 @@ public class DatabaseChangelog {
         db.createCollection("years");
     }
 
-    @ChangeSet(order = "002", id = "insertBooks", author = "maslov")
+    @ChangeSet(order = "002", id = "insertSome", author = "maslov")
+    public void insertSome(MongoDatabase db) {
+        MongoCollection<Document> myCollection = db.getCollection("authors");
+        var doc = new Document();
+        doc.put("name", "lafore");
+        myCollection.insertOne(doc);
+    }
+
+    @ChangeSet(order = "003", id = "insertBooks", author = "maslov")
     public void insertBooks(BookRepo repo) {
-        Book book = new Book("java");
-        book.setGenre(new Genre("study"));
-        book.setYear(new YearOfPublish("2022"));
+        // TODO Cannot create a reference to an object with a NULL id.
+        Book book = new Book( "java");
+//        book.setGenre(new Genre("study"));
+//        book.setYear(new YearOfPublish("2022"));
         book.setAuthors(new ArrayList<>());
         book.getAuthors().add(new Author("lafore"));
-        book.setListOfComment(new ArrayList<>());
-        book.getListOfComment().add(new Comment("first comment"));
+//        book.setListOfComment(new ArrayList<>());
+//        book.getListOfComment().add(new Comment("first comment"));
 
         repo.save( book );
     }

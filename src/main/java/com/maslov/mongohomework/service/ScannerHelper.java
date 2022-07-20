@@ -13,6 +13,10 @@ public class ScannerHelper {
 //        return scanner.nextLine();
 //    }
 
+    public int getIntFromUser() {
+        return scanner.nextInt();
+    }
+
     public String getFromUser() {
         return scanner.nextLine();
     }

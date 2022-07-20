@@ -1,12 +1,10 @@
 package com.maslov.mongohomework.domain;
 
-import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 @Document(collection = "comments")
-@Data
 public class Comment {
     @Id
     private String id;
@@ -21,8 +19,8 @@ public class Comment {
         this.commentForBook = commentForBook;
     }
 
-    public String getId() {
-        return id;
+    public Integer getId() {
+        return Integer.valueOf(id);
     }
 
     public void setId(String id) {

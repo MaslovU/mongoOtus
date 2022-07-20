@@ -22,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class BookDaoTest {
-    private static final String ID = "3";
+    private static final int ID = 3;
     private static final String JAVA = "java";
     private static final String STUDYING = "study";
     private static final String TEST = "Test";
@@ -63,12 +63,12 @@ class BookDaoTest {
 //        assertThat(model.getGenre()).isEqualTo(STUDYING);
     }
 
-    @Test
-    void getBooksByName() {
-        List<Book> books = bookRepo.getBooksByName(JAVA);
-
-        assertThat(books.get(0).getId()).isEqualTo(ID);
-    }
+//    @Test
+//    void getBooksByName() {
+//        List<Book> books = bookRepo.getBooksByName(JAVA);
+//
+//        assertThat(books.get(0)).isEqualTo(ID);
+//    }
 
     @Test
     void createBook() {
@@ -107,12 +107,12 @@ class BookDaoTest {
 //        assertThat(updatedBook.getName()).isEqualTo(TEST);
     }
 
-    @Test
-    void deleteBook() {
-        List<Book> booksBefore = bookRepo.findAll();
-        bookRepo.deleteById(ID_FOR_DELETE);
-        List<Book> booksAfter = bookRepo.findAll();
-
-        assertThat(booksAfter).hasSize(booksBefore.size() - 1);
-    }
+//    @Test
+//    void deleteBook() {
+//        List<Book> booksBefore = bookRepo.findAll();
+//        bookRepo.deleteById(ID_FOR_DELETE);
+//        List<Book> booksAfter = bookRepo.findAll();
+//
+//        assertThat(booksAfter).hasSize(booksBefore.size() - 1);
+//    }
 }
