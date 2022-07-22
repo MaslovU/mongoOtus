@@ -9,7 +9,6 @@ public class Comment {
     @Id
     private String id;
 
-    @Field(name = "comment_book")
     private String commentForBook;
 
     public Comment() {

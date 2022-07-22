@@ -7,7 +7,9 @@ import com.maslov.mongohomework.domain.Book;
 import com.maslov.mongohomework.domain.Comment;
 import com.maslov.mongohomework.domain.Genre;
 import com.maslov.mongohomework.domain.YearOfPublish;
+import com.maslov.mongohomework.repository.AuthorRepo;
 import com.maslov.mongohomework.repository.BookRepo;
+import com.maslov.mongohomework.repository.CommentRepo;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
@@ -40,33 +42,22 @@ public class DatabaseChangelog {
     }
 
     @ChangeSet(order = "003", id = "insertBooks", author = "maslov")
-    public void insertBooks(BookRepo repo) {
-        // TODO Cannot create a reference to an object with a NULL id.
+    public void insertBooks(BookRepo repo, CommentRepo commentRepo, AuthorRepo authorRepo) {
+
         Book book = new Book( "java");
-//        book.setGenre(new Genre("study"));
-//        book.setYear(new YearOfPublish("2022"));
+        book.setGenre(new Genre("study"));
+        book.setYear(new YearOfPublish("2022"));
         book.setAuthors(new ArrayList<>());
-        book.getAuthors().add(new Author("lafore"));
-//        book.setListOfComment(new ArrayList<>());
-//        book.getListOfComment().add(new Comment("first comment"));
+        Author lafore = authorRepo.save(new Author("lafore"));
+        Author future = authorRepo.save(new Author("future"));
+        book.getAuthors().add(lafore);
+        book.getAuthors().add(future);
+        book.setListOfComment(new ArrayList<>());
+        Comment first = commentRepo.save(new Comment("first comment"));
+        Comment second = commentRepo.save(new Comment("second comment"));
+        book.getListOfComment().add(first);
+        book.getListOfComment().add(second);
 
         repo.save( book );
     }
-
-//    @ChangeSet(order = "002", id = "insertBooks", author = "maslov")
-//    public void insertBooks(MongoDatabase db) {
-//        MongoCollection<Document> myCollection = db.getCollection("books");
-//        List<Author> authorsList = Arrays.asList(new Author("lafore"));
-//        // The Document class currently supports only List, not native Java array
-//        // authorsList.add(new Author("lafore"));
-//        List<Comment> commentsList = Arrays.asList(new Comment("first comment"));
-////        commentsList.add(new Comment("first comment"));
-//        var doc = new Document();
-//                doc.put("name", "java");
-//                doc.put("genre", new Genre("study"));
-//                doc.put("year", "2022");
-//                doc.put("authors", authorsList);
-//                doc.put("listOfComment", commentsList);
-//        myCollection.insertOne(doc);
-//    }
 }
