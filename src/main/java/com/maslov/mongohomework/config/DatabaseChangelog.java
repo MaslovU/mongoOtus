@@ -1,4 +1,4 @@
-package com.maslov.mongohomework.config.dbmigrations;
+package com.maslov.mongohomework.config;
 
 import com.github.cloudyrock.mongock.ChangeLog;
 import com.github.cloudyrock.mongock.ChangeSet;

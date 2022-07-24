@@ -8,12 +8,13 @@ import com.maslov.mongohomework.service.BookServiceHelper;
 import com.maslov.mongohomework.service.ScannerHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service
+@Component
 @Slf4j
 public class BookServiceImpl implements BookService {
     private static final String ENTER_ID = "Enter ID for book or 0 is your dont now ID";
