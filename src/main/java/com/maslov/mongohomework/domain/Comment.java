@@ -36,7 +36,7 @@ public class Comment {
     @Override
     public String toString() {
         return "Comment{" +
-                "commentForBook='" + commentForBook + '\'' +
+                "commentForBook='" + getCommentForBook() + '\'' +
                 '}';
     }
 }
