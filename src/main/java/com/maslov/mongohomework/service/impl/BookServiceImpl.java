@@ -1,8 +1,6 @@
 package com.maslov.mongohomework.service.impl;
 
-import com.maslov.mongohomework.domain.Author;
 import com.maslov.mongohomework.domain.Book;
-import com.maslov.mongohomework.domain.Comment;
 import com.maslov.mongohomework.exception.MongoMaslovException;
 import com.maslov.mongohomework.repository.BookRepo;
 import com.maslov.mongohomework.service.BookService;
@@ -11,10 +9,8 @@ import com.maslov.mongohomework.service.ScannerHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Component

@@ -10,7 +10,6 @@ import com.maslov.mongohomework.repository.AuthorRepo;
 import com.maslov.mongohomework.repository.BookRepo;
 import com.maslov.mongohomework.repository.CommentRepo;
 import lombok.extern.slf4j.Slf4j;
-import lombok.val;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -71,15 +70,6 @@ public class BookServiceHelper {
         }
     }
 
-    private Author getAuthor(String authorName) {
-        if (authorRepo.findByName(authorName).isEmpty()) {
-            return authorRepo.save(new Author(authorName));
-        } else {
-            Author author = authorRepo.findByName(authorName).get(0);
-            return author;
-        }
-    }
-
     private Book getListAuthors(Book book) {
         System.out.println("Enter new names of the authors");
         List<String> authorNames = List.of(helper.getFromUser().split(","));
@@ -94,6 +84,14 @@ public class BookServiceHelper {
                 book.getAuthors().add(getAuthor(s));
             }
             return book;
+        }
+    }
+
+    private Author getAuthor(String authorName) {
+        if (authorRepo.findByName(authorName).isEmpty()) {
+            return authorRepo.save(new Author(authorName));
+        } else {
+            return authorRepo.findByName(authorName).get(0);
         }
     }
 
