@@ -13,7 +13,7 @@
     <artifactId>mongoHomework</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>mongoHomework</name>
-    <description>mongoHomework</description>
+<!--    <description>mongoHomework</description>-->
     <properties>
         <java.version>11</java.version>
         <maven.compiler.sourcre>11</maven.compiler.sourcre>
@@ -60,6 +60,15 @@
             <artifactId>spring-shell-standard</artifactId>
             <version>2.0.1.RELEASE</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/de.flapdoodle.embed/de.flapdoodle.embed.mongo -->
+<!--        <dependency>-->
+<!--            <groupId>de.flapdoodle.embed</groupId>-->
+<!--            <artifactId>de.flapdoodle.embed.mongo</artifactId>-->
+<!--            <version>${mongo.db.version}</version>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
+
     </dependencies>
 
     <build>

@@ -9,7 +9,6 @@ import com.maslov.mongohomework.service.ScannerHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -34,7 +33,6 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    @Transactional
     public List<Comment> createComment() {
         String idForBook = getIdForBook();
         helper.getEmptyString();
@@ -55,7 +53,6 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    @Transactional
     public List<Comment> updateComment() {
         String idForBook = getIdForBook();
         String idComment = getCommentId(idForBook);

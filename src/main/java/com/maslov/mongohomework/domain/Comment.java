@@ -2,7 +2,6 @@ package com.maslov.mongohomework.domain;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
 @Document(collection = "comments")
 public class Comment {
@@ -32,5 +31,12 @@ public class Comment {
 
     public void setCommentForBook(String commentForBook) {
         this.commentForBook = commentForBook;
+    }
+
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "commentForBook='" + getCommentForBook() + '\'' +
+                '}';
     }
 }

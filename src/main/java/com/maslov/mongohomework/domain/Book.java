@@ -1,6 +1,5 @@
 package com.maslov.mongohomework.domain;
 
-import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -85,5 +84,17 @@ public class Book {
 
     public void setListOfComment(List<Comment> listOfComment) {
         this.listOfComment = listOfComment;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", genre=" + genre +
+                ", year=" + year +
+                ", authors=" + authors +
+                ", listOfComment=" + listOfComment +
+                '}';
     }
 }

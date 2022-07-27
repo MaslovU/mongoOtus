@@ -1,4 +1,4 @@
-package com.maslov.mongohomework.config.dbmigrations;
+package com.maslov.mongohomework.config;
 
 import com.github.cloudyrock.mongock.ChangeLog;
 import com.github.cloudyrock.mongock.ChangeSet;
@@ -44,7 +44,7 @@ public class DatabaseChangelog {
     @ChangeSet(order = "003", id = "insertBooks", author = "maslov")
     public void insertBooks(BookRepo repo, CommentRepo commentRepo, AuthorRepo authorRepo) {
 
-        Book book = new Book( "java");
+        Book book = new Book("java");
         book.setGenre(new Genre("study"));
         book.setYear(new YearOfPublish("2022"));
         book.setAuthors(new ArrayList<>());
@@ -58,6 +58,6 @@ public class DatabaseChangelog {
         book.getListOfComment().add(first);
         book.getListOfComment().add(second);
 
-        repo.save( book );
+        repo.save(book);
     }
 }

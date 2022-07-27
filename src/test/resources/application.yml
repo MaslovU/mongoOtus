@@ -1,16 +1,9 @@
 spring:
-  main:
-    allow-circular-references: true
-
-  shell:
-    interactive:
-      enabled: true
-
   data:
     mongodb:
-      database: books
+      uri: mongodb://localhost
       port: 27017
-      host: localhost
+      database: books
 
 mongock:
   runner-type: InitializingBean
@@ -20,3 +13,7 @@ mongock:
     true
   mongo-db.read-concern:
     available
+
+logging:
+  level:
+    root: ERROR

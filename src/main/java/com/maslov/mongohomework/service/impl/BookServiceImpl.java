@@ -8,12 +8,11 @@ import com.maslov.mongohomework.service.BookServiceHelper;
 import com.maslov.mongohomework.service.ScannerHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Service
+@Component
 @Slf4j
 public class BookServiceImpl implements BookService {
     private static final String ENTER_ID = "Enter ID for book or 0 is your dont now ID";
@@ -33,7 +32,7 @@ public class BookServiceImpl implements BookService {
     public void getBook() {
         System.out.println(ENTER_ID);
         int id = helper.getIntFromUser();
-        if (id == 0) {
+        if (id > 0) {
             Book book = bookRepo.findById(id).orElseThrow(() -> new MongoMaslovException("Book with this id is not exist"));
             System.out.println(book);
         } else {
@@ -50,14 +49,13 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    @Transactional
     public Book createBook() {
-        Book bookFromUser = bookServiceHelper.getBookFromUser("0");
-        return bookRepo.save(bookFromUser);
+        Book book = bookServiceHelper.getBookFromUser("0");
+
+        return bookRepo.save(book);
     }
 
     @Override
-    @Transactional
     public void updateBook() {
         log.debug("Start updating book. if you don't want to change the value, click Enter");
         System.out.println(ENTER_ID);

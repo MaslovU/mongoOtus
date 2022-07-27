@@ -9,10 +9,6 @@ public class ScannerHelper {
 
     Scanner scanner = new Scanner(System.in);
 
-//    public String getIdFromUser() {
-//        return scanner.nextLine();
-//    }
-
     public int getIntFromUser() {
         return scanner.nextInt();
     }

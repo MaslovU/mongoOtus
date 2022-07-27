@@ -8,8 +8,8 @@ import com.maslov.mongohomework.domain.YearOfPublish;
 import com.maslov.mongohomework.exception.MongoMaslovException;
 import com.maslov.mongohomework.repository.AuthorRepo;
 import com.maslov.mongohomework.repository.BookRepo;
+import com.maslov.mongohomework.repository.CommentRepo;
 import lombok.extern.slf4j.Slf4j;
-import lombok.val;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,25 +24,33 @@ public class BookServiceHelper {
     private final AuthorRepo authorRepo;
     private final BookRepo bookRepo;
 
-    public BookServiceHelper(ScannerHelper helper, AuthorRepo authorRepo, BookRepo bookRepo) {
+    private final CommentRepo commentRepo;
+
+    public BookServiceHelper(ScannerHelper helper, AuthorRepo authorRepo, BookRepo bookRepo, CommentRepo commentRepo) {
         this.helper = helper;
         this.authorRepo = authorRepo;
         this.bookRepo = bookRepo;
+        this.commentRepo = commentRepo;
     }
 
     public Book getBookFromUser(String idOfBook) {
         String name = getNameOfBook(idOfBook);
-        Genre genre = getGenre(name);
-//        List<Author> authors = getListAuthors(idOfBook);
-        YearOfPublish year = getYear(name);
-        List<Comment> comments = getComments(idOfBook);
+        Book book = new Book(name);
 
-        Book book = new Book();
-//        book.setAuthor(authors);
-        book.setName(name);
-        book.setGenre(genre);
+        List<Author> authors = new ArrayList<>();
+        book.setAuthors(authors);
+
+        List<Comment> comments = new ArrayList<>();
         book.setListOfComment(comments);
+
+        Genre genre = getGenre(name);
+        YearOfPublish year = getYear(name);
+
+        book = getListAuthors(book);
+        book = getComments(book);
+        book.setGenre(genre);
         book.setYear(year);
+
         return book;
     }
 
@@ -62,40 +70,40 @@ public class BookServiceHelper {
         }
     }
 
-    private String getAuthorId(String authorName) {
-        if (authorRepo.findByName(authorName).isEmpty()) {
-            Author author = authorRepo.save(new Author(authorName));
-            return author.getId();
+    private Book getListAuthors(Book book) {
+        System.out.println("Enter new names of the authors");
+        List<String> authorNames = List.of(helper.getFromUser().split(","));
+        if (authorNames.get(0).isEmpty() && authorNames.size() == 1) {
+            try {
+                return bookRepo.findById(Integer.valueOf(book.getId())).orElseThrow();
+            } catch (NoSuchElementException e) {
+                throw new MongoMaslovException("Has not authors for this book. Need enter names");
+            }
         } else {
-            return authorRepo.findByName(authorName).get(0).getId();
+            for (String s : authorNames) {
+                book.getAuthors().add(getAuthor(s));
+            }
+            return book;
         }
     }
 
-//    private List<Author> getListAuthors(String idOfBook) {
-//        System.out.println("Enter new names of the authors");
-//        List<String> authorNames = List.of(helper.getFromUser().split(","));
-//        List<Author> authors = new ArrayList<>();
-//        if (authorNames.get(0).isEmpty() && authorNames.size() == 1) {
-//            try {
-//                return bookRepo.findById(idOfBook).orElseThrow().getAuthor();
-//            } catch (NoSuchElementException e) {
-//                throw new MongoMaslovException("Has not authors for this book. Need enter names");
-//            }
-//        } else {
-//            for (String s : authorNames) {
-//                String authorId = getAuthorId(s);
-//                Author author = new Author(s);
-//                authors.add(author);
-//            }
-//            return authors;
-//        }
-//    }
+    private Author getAuthor(String authorName) {
+        if (authorRepo.findByName(authorName).isEmpty()) {
+            return authorRepo.save(new Author(authorName));
+        } else {
+            return authorRepo.findByName(authorName).get(0);
+        }
+    }
 
     private YearOfPublish getYear(String nameOfBook) {
         System.out.println("Enter new years of publish");
         String year = helper.getFromUser();
         if (year.isEmpty()) {
-            return bookRepo.getBooksByName(nameOfBook).get(0).getYear();
+            try {
+                return bookRepo.getBooksByName(nameOfBook).get(0).getYear();
+            } catch (IndexOutOfBoundsException e) {
+                return new YearOfPublish("");
+            }
         } else {
             return new YearOfPublish(year);
         }
@@ -111,20 +119,14 @@ public class BookServiceHelper {
         }
     }
 
-    private List<Comment> getComments(String ibOfBook) {
+    private Book getComments(Book book) {
         System.out.println("You can add comment to this book or press enter");
-        String comment = helper.getFromUser();
-        if (comment.isEmpty()) {
-            try {
-                return bookRepo.findById(Integer.valueOf(ibOfBook)).orElseThrow().getListOfComment();
-            } catch (NoSuchElementException | NullPointerException e) {
-                return new ArrayList<>();
-            }
+        String commentFromUser = helper.getFromUser();
+        if (commentFromUser.isEmpty()) {
+            return bookRepo.findById(Integer.valueOf(book.getId())).orElseThrow();
         } else {
-            val comm = new Comment(comment);
-            List<Comment> comments = bookRepo.findById(Integer.valueOf(ibOfBook)).orElseThrow().getListOfComment();
-            comments.add(comm);
-            return comments;
+            book.getListOfComment().add(commentRepo.save(new Comment(commentFromUser)));
+            return book;
         }
     }
 }
