@@ -9,7 +9,6 @@ import com.maslov.mongohomework.service.ScannerHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -50,7 +49,6 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    @Transactional
     public Book createBook() {
         Book book = bookServiceHelper.getBookFromUser("0");
 
@@ -58,7 +56,6 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    @Transactional
     public void updateBook() {
         log.debug("Start updating book. if you don't want to change the value, click Enter");
         System.out.println(ENTER_ID);
