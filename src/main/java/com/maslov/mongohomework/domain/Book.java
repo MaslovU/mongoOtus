@@ -85,4 +85,16 @@ public class Book {
     public void setListOfComment(List<Comment> listOfComment) {
         this.listOfComment = listOfComment;
     }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", genre=" + genre +
+                ", year=" + year +
+                ", authors=" + authors +
+                ", listOfComment=" + listOfComment +
+                '}';
+    }
 }

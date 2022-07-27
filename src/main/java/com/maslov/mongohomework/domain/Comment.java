@@ -32,4 +32,11 @@ public class Comment {
     public void setCommentForBook(String commentForBook) {
         this.commentForBook = commentForBook;
     }
+
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "commentForBook='" + commentForBook + '\'' +
+                '}';
+    }
 }

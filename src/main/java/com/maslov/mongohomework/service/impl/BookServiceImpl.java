@@ -1,6 +1,8 @@
 package com.maslov.mongohomework.service.impl;
 
+import com.maslov.mongohomework.domain.Author;
 import com.maslov.mongohomework.domain.Book;
+import com.maslov.mongohomework.domain.Comment;
 import com.maslov.mongohomework.exception.MongoMaslovException;
 import com.maslov.mongohomework.repository.BookRepo;
 import com.maslov.mongohomework.service.BookService;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -34,7 +37,7 @@ public class BookServiceImpl implements BookService {
     public void getBook() {
         System.out.println(ENTER_ID);
         int id = helper.getIntFromUser();
-        if (id == 0) {
+        if (id > 0) {
             Book book = bookRepo.findById(id).orElseThrow(() -> new MongoMaslovException("Book with this id is not exist"));
             System.out.println(book);
         } else {
@@ -53,8 +56,9 @@ public class BookServiceImpl implements BookService {
     @Override
     @Transactional
     public Book createBook() {
-        Book bookFromUser = bookServiceHelper.getBookFromUser("0");
-        return bookRepo.save(bookFromUser);
+        Book book = bookServiceHelper.getBookFromUser("0");
+
+        return bookRepo.save(book);
     }
 
     @Override
